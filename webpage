@@ -1,0 +1,946 @@
+
+<!DOCTYPE html>
+<html class="no-js" lang="en-US">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="profile" href="https://gmpg.org/xfn/11">
+<link rel="pingback" href="https://www.linuxtechi.com/xmlrpc.php">
+<title>How to install and Configure Jenkins on CentOS 7 and RHEL 7</title>
+<script type="a287e5e2e8ae3f667e2ceee5-text/javascript">document.documentElement.className = document.documentElement.className.replace("no-js","js");</script>
+
+<meta name="description" content="Definitive guide to install and configure Jenkins on CentOS 7 and RHEL 7. Jenkins is an open source continues integration tool and its code written in java ." />
+<meta name="keywords" content="install jenkins on centos 7,configure github project in jenkins,git plugin in jenkins,jenkins continues integration tool" />
+<link rel="canonical" href="https://www.linuxtechi.com/install-configure-jenkins-on-centos-7-rhel-7/" />
+<script type="a287e5e2e8ae3f667e2ceee5-text/javascript">
+				window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+				ga('create', 'UA-48714625-1', 'auto');
+				// Plugins
+				
+				ga('send', 'pageview');
+			</script>
+<script async src="https://www.google-analytics.com/analytics.js" type="a287e5e2e8ae3f667e2ceee5-text/javascript"></script>
+
+<link rel="amphtml" href="https://www.linuxtechi.com/install-configure-jenkins-on-centos-7-rhel-7/amp/" /><meta name="generator" content="AMP for WP 0.9.97.60" /><link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="Linuxtechi &raquo; Feed" href="https://www.linuxtechi.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Linuxtechi &raquo; Comments Feed" href="https://www.linuxtechi.com/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Linuxtechi &raquo; How to install and Configure Jenkins on CentOS 7 and RHEL 7 Comments Feed" href="https://www.linuxtechi.com/install-configure-jenkins-on-centos-7-rhel-7/feed/" />
+<script type="a287e5e2e8ae3f667e2ceee5-text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/12.0.0-1\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/12.0.0-1\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/www.linuxtechi.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.2.2"}};
+			!function(a,b,c){function d(a,b){var c=String.fromCharCode;l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,a),0,0);var d=k.toDataURL();l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,b),0,0);var e=k.toDataURL();return d===e}function e(a){var b;if(!l||!l.fillText)return!1;switch(l.textBaseline="top",l.font="600 32px Arial",a){case"flag":return!(b=d([55356,56826,55356,56819],[55356,56826,8203,55356,56819]))&&(b=d([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]),!b);case"emoji":return b=d([55357,56424,55356,57342,8205,55358,56605,8205,55357,56424,55356,57340],[55357,56424,55356,57342,8203,55358,56605,8203,55357,56424,55356,57340]),!b}return!1}function f(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var g,h,i,j,k=b.createElement("canvas"),l=k.getContext&&k.getContext("2d");for(j=Array("flag","emoji"),c.supports={everything:!0,everythingExceptFlag:!0},i=0;i<j.length;i++)c.supports[j[i]]=e(j[i]),c.supports.everything=c.supports.everything&&c.supports[j[i]],"flag"!==j[i]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[j[i]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(h=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",h,!1),a.addEventListener("load",h,!1)):(a.attachEvent("onload",h),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),g=c.source||{},g.concatemoji?f(g.concatemoji):g.wpemoji&&g.twemoji&&(f(g.twemoji),f(g.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='wp-block-library-css' href='https://www.linuxtechi.com/wp-includes/css/dist/block-library/style.min.css?ver=5.2.2' type='text/css' media='all' />
+<link rel='stylesheet' id='cptch_stylesheet-css' href='https://www.linuxtechi.com/wp-content/plugins/captcha/css/front_end_style.css?ver=4.4.5' type='text/css' media='all' />
+<link rel='stylesheet' id='dashicons-css' href='https://www.linuxtechi.com/wp-includes/css/dashicons.min.css?ver=5.2.2' type='text/css' media='all' />
+<link rel='stylesheet' id='cptch_desktop_style-css' href='https://www.linuxtechi.com/wp-content/plugins/captcha/css/desktop_style.css?ver=4.4.5' type='text/css' media='all' />
+<link rel='stylesheet' id='responsive-lightbox-swipebox-css' href='https://www.linuxtechi.com/wp-content/plugins/responsive-lightbox/assets/swipebox/css/swipebox.min.css?ver=2.1.0' type='text/css' media='all' />
+<link rel='stylesheet' id='scfp-form-repeater-css-css' href='https://www.linuxtechi.com/wp-content/plugins/wcp-contact-form/agp-core/assets/repeater/css/style.css?ver=5.2.2' type='text/css' media='all' />
+<link rel='stylesheet' id='scfp-css-css' href='https://www.linuxtechi.com/wp-content/plugins/wcp-contact-form/assets/css/style.css?ver=5.2.2' type='text/css' media='all' />
+<link rel='stylesheet' id='hueman-main-style-css' href='https://www.linuxtechi.com/wp-content/themes/hueman/assets/front/css/main.min.css?ver=3.4.0' type='text/css' media='all' />
+<style id='hueman-main-style-inline-css' type='text/css'>
+body { font-family:Georgia, serif;font-size:0.94rem }@media only screen and (min-width: 720px) {
+        .nav > li { font-size:0.94rem; }
+      }.sidebar .widget { padding-left: 20px; padding-right: 20px; padding-top: 20px; }::selection { background-color: #155c8e; }
+::-moz-selection { background-color: #155c8e; }a,.themeform label .required,#flexslider-featured .flex-direction-nav .flex-next:hover,#flexslider-featured .flex-direction-nav .flex-prev:hover,.post-hover:hover .post-title a,.post-title a:hover,.sidebar.s1 .post-nav li a:hover i,.content .post-nav li a:hover i,.post-related a:hover,.sidebar.s1 .widget_rss ul li a,#footer .widget_rss ul li a,.sidebar.s1 .widget_calendar a,#footer .widget_calendar a,.sidebar.s1 .alx-tab .tab-item-category a,.sidebar.s1 .alx-posts .post-item-category a,.sidebar.s1 .alx-tab li:hover .tab-item-title a,.sidebar.s1 .alx-tab li:hover .tab-item-comment a,.sidebar.s1 .alx-posts li:hover .post-item-title a,#footer .alx-tab .tab-item-category a,#footer .alx-posts .post-item-category a,#footer .alx-tab li:hover .tab-item-title a,#footer .alx-tab li:hover .tab-item-comment a,#footer .alx-posts li:hover .post-item-title a,.comment-tabs li.active a,.comment-awaiting-moderation,.child-menu a:hover,.child-menu .current_page_item > a,.wp-pagenavi a{ color: #155c8e; }.themeform input[type="submit"],.themeform button[type="submit"],.sidebar.s1 .sidebar-top,.sidebar.s1 .sidebar-toggle,#flexslider-featured .flex-control-nav li a.flex-active,.post-tags a:hover,.sidebar.s1 .widget_calendar caption,#footer .widget_calendar caption,.author-bio .bio-avatar:after,.commentlist li.bypostauthor > .comment-body:after,.commentlist li.comment-author-admin > .comment-body:after{ background-color: #155c8e; }.post-format .format-container { border-color: #155c8e; }.sidebar.s1 .alx-tabs-nav li.active a,#footer .alx-tabs-nav li.active a,.comment-tabs li.active a,.wp-pagenavi a:hover,.wp-pagenavi a:active,.wp-pagenavi span.current{ border-bottom-color: #155c8e!important; }.sidebar.s2 .post-nav li a:hover i,
+.sidebar.s2 .widget_rss ul li a,
+.sidebar.s2 .widget_calendar a,
+.sidebar.s2 .alx-tab .tab-item-category a,
+.sidebar.s2 .alx-posts .post-item-category a,
+.sidebar.s2 .alx-tab li:hover .tab-item-title a,
+.sidebar.s2 .alx-tab li:hover .tab-item-comment a,
+.sidebar.s2 .alx-posts li:hover .post-item-title a { color: #3e92cc; }
+.sidebar.s2 .sidebar-top,.sidebar.s2 .sidebar-toggle,.post-comments,.jp-play-bar,.jp-volume-bar-value,.sidebar.s2 .widget_calendar caption{ background-color: #3e92cc; }.sidebar.s2 .alx-tabs-nav li.active a { border-bottom-color: #3e92cc; }
+.post-comments span:before { border-right-color: #3e92cc; }
+      .search-expand,
+              #nav-topbar.nav-container { background-color: #000000}@media only screen and (min-width: 720px) {
+                #nav-topbar .nav ul { background-color: #000000; }
+              }.is-scrolled #header .nav-container.desktop-sticky,
+              .is-scrolled #header .search-expand { background-color: #000000; background-color: rgba(0,0,0,0.90) }.is-scrolled .topbar-transparent #nav-topbar.desktop-sticky .nav ul { background-color: #000000; background-color: rgba(0,0,0,0.95) }#header { background-color: #ffffff; }
+@media only screen and (min-width: 720px) {
+  #nav-header .nav ul { background-color: #ffffff; }
+}
+        #header #nav-mobile { background-color: #e8e8e8; }.is-scrolled #header #nav-mobile { background-color: #e8e8e8; background-color: rgba(232,232,232,0.90) }#nav-header.nav-container, #main-header-search .search-expand { background-color: #33363b; }
+@media only screen and (min-width: 720px) {
+  #nav-header .nav ul { background-color: #33363b; }
+}
+        .site-title a img { max-height: 80px; }img { -webkit-border-radius: 5px; border-radius: 5px; }body { background-color: #eaeaea; }
+</style>
+<link rel='stylesheet' id='hueman-font-awesome-css' href='https://www.linuxtechi.com/wp-content/themes/hueman/assets/front/css/font-awesome.min.css?ver=3.4.0' type='text/css' media='all' />
+<script type="a287e5e2e8ae3f667e2ceee5-text/javascript" src='https://www.linuxtechi.com/wp-includes/js/jquery/jquery.js?ver=1.12.4-wp'></script>
+<script type="a287e5e2e8ae3f667e2ceee5-text/javascript" src='https://www.linuxtechi.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
+<script type="a287e5e2e8ae3f667e2ceee5-text/javascript" src='https://www.linuxtechi.com/wp-content/plugins/responsive-lightbox/assets/swipebox/js/jquery.swipebox.min.js?ver=2.1.0'></script>
+<script type="a287e5e2e8ae3f667e2ceee5-text/javascript" src='https://www.linuxtechi.com/wp-content/plugins/responsive-lightbox/assets/infinitescroll/infinite-scroll.pkgd.min.js?ver=5.2.2'></script>
+<script type="a287e5e2e8ae3f667e2ceee5-text/javascript">
+/* <![CDATA[ */
+var rlArgs = {"script":"swipebox","selector":"lightbox","customEvents":"","activeGalleries":"1","animation":"1","hideCloseButtonOnMobile":"0","removeBarsOnMobile":"0","hideBars":"1","hideBarsDelay":"5000","videoMaxWidth":"1080","useSVG":"1","loopAtEnd":"0","woocommerce_gallery":"0","ajaxurl":"https:\/\/www.linuxtechi.com\/wp-admin\/admin-ajax.php","nonce":"f662d6f685"};
+/* ]]> */
+</script>
+<script type="a287e5e2e8ae3f667e2ceee5-text/javascript" src='https://www.linuxtechi.com/wp-content/plugins/responsive-lightbox/js/front.js?ver=2.1.0'></script>
+<script type="a287e5e2e8ae3f667e2ceee5-text/javascript" src='https://www.linuxtechi.com/wp-content/plugins/wcp-contact-form/agp-core/assets/repeater/js/main.js?ver=5.2.2'></script>
+<link rel='https://api.w.org/' href='https://www.linuxtechi.com/wp-json/' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://www.linuxtechi.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://www.linuxtechi.com/wp-includes/wlwmanifest.xml" />
+<link rel='prev' title='AutoCAD Alternative Tools for Ubuntu and Linux Mint Users' href='https://www.linuxtechi.com/autocad-alternative-tools-for-ubuntu-linuxmint-users/' />
+<link rel='next' title='Install Apache Tomcat 9 on CentOS 7 / RHEL 7 / Ubuntu 16.04' href='https://www.linuxtechi.com/install-apache-tomcat9-centos7-rhel7-ubuntu16-04/' />
+<meta name="generator" content="WordPress 5.2.2" />
+<link rel='shortlink' href='https://www.linuxtechi.com/?p=4441' />
+<link rel="alternate" type="application/json+oembed" href="https://www.linuxtechi.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.linuxtechi.com%2Finstall-configure-jenkins-on-centos-7-rhel-7%2F" />
+<link rel="alternate" type="text/xml+oembed" href="https://www.linuxtechi.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.linuxtechi.com%2Finstall-configure-jenkins-on-centos-7-rhel-7%2F&#038;format=xml" />
+<!--[if lt IE 9]>
+<script src="https://www.linuxtechi.com/wp-content/themes/hueman/assets/front/js/ie/html5shiv-printshiv.min.js"></script>
+<script src="https://www.linuxtechi.com/wp-content/themes/hueman/assets/front/js/ie/selectivizr.js"></script>
+<![endif]-->
+<link rel="icon" href="https://www.linuxtechi.com/wp-content/uploads/2018/06/linuxtechi-favicon-150x150.jpg" sizes="32x32" />
+<link rel="icon" href="https://www.linuxtechi.com/wp-content/uploads/2018/06/linuxtechi-favicon-300x300.jpg" sizes="192x192" />
+<link rel="apple-touch-icon-precomposed" href="https://www.linuxtechi.com/wp-content/uploads/2018/06/linuxtechi-favicon-300x300.jpg" />
+<meta name="msapplication-TileImage" content="https://www.linuxtechi.com/wp-content/uploads/2018/06/linuxtechi-favicon-300x300.jpg" />
+</head>
+<body data-rsssl=1 class="post-template-default single single-post postid-4441 single-format-standard wp-custom-logo col-2cl full-width topbar-enabled mobile-sidebar-hide-s2 header-desktop-sticky chrome">
+<div id="wrapper">
+<header id="header" class="both-menus-mobile-on two-mobile-menus both_menus header-ads-desktop  topbar-transparent no-header-img">
+<nav class="nav-container group desktop-menu desktop-sticky " id="nav-topbar" data-menu-id="header-1">
+
+<div class="ham__navbar-toggler-two collapsed" title="Menu" aria-expanded="false">
+<div class="ham__navbar-span-wrapper">
+<span class="line line-1"></span>
+<span class="line line-2"></span>
+<span class="line line-3"></span>
+</div>
+</div>
+<div class="nav-text"></div>
+<div class="topbar-toggle-down">
+<i class="fas fa-angle-double-down" aria-hidden="true" data-toggle="down" title="Expand menu"></i>
+<i class="fas fa-angle-double-up" aria-hidden="true" data-toggle="up" title="Collapse menu"></i>
+</div>
+<div class="nav-wrap container">
+<ul class="nav container-inner group"><li><a href="https://www.linuxtechi.com/">Home</a></li><li class="page_item page-item-156"><a href="https://www.linuxtechi.com/contact-us/">Contact Us</a></li><li class="page_item page-item-1779"><a href="https://www.linuxtechi.com/about-us/">About Us</a></li><li class="page_item page-item-2254"><a href="https://www.linuxtechi.com/write-for-us/">Write For LinuxTechi</a></li></ul> </div>
+</nav>
+<div class="container group">
+<div class="container-inner">
+<div class="group pad central-header-zone">
+<div class="logo-tagline-group">
+<p class="site-title"><a class="custom-logo-link" href="https://www.linuxtechi.com/" rel="home" title="Linuxtechi | Home page"><img src="https://www.linuxtechi.com/wp-content/uploads/2007/09/logo-1.png" alt="Linuxtechi"></a></p>
+</div>
+<div id="header-widgets">
+</div>
+</div>
+<nav class="nav-container group desktop-menu " id="nav-header" data-menu-id="header-2">
+
+<div class="ham__navbar-toggler-two collapsed" title="Menu" aria-expanded="false">
+<div class="ham__navbar-span-wrapper">
+<span class="line line-1"></span>
+<span class="line line-2"></span>
+<span class="line line-3"></span>
+</div>
+</div>
+<div class="nav-text"></div>
+<div class="nav-wrap container">
+<ul id="menu-linuxtechi" class="nav container-inner group"><li id="menu-item-6" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-6"><a href="https://www.linuxtechi.com/">Home</a></li>
+<li id="menu-item-5151" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-5151"><a href="https://www.linuxtechi.com/category/how-to/">How To</a></li>
+<li id="menu-item-5152" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-5152"><a href="https://www.linuxtechi.com/category/linux-commands/">Commands</a></li>
+<li id="menu-item-158" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-158"><a href="https://www.linuxtechi.com/category/shell-scripting/">Shell Scripting</a></li>
+<li id="menu-item-5696" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-5696"><a href="https://www.linuxtechi.com/category/monitoring-tools/">Monitoring Tools</a></li>
+<li id="menu-item-157" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-157"><a href="https://www.linuxtechi.com/category/linux-interview/">Linux Interview</a></li>
+<li id="menu-item-3227" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-3227"><a target="_blank" rel="noopener noreferrer" href="https://linuxtechi.tradepub.com/category/information-technology-servers-and-linux-server-os/806/">Linux ebooks</a></li>
+<li id="menu-item-2255" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2255"><a href="https://www.linuxtechi.com/write-for-us/">Write For LinuxTechi</a></li>
+<li id="menu-item-1781" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1781"><a href="https://www.linuxtechi.com/contact-us/">Contact Us</a></li>
+<li id="menu-item-1780" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1780"><a href="https://www.linuxtechi.com/about-us/">About Us</a></li>
+</ul> </div>
+</nav>
+</div>
+</div>
+</header>
+<div class="container" id="page">
+<div class="container-inner">
+<div class="main">
+<div class="main-inner group">
+<section class="content">
+<div class="page-title pad group">
+<ul class="meta-single group">
+<li class="category"><a href="https://www.linuxtechi.com/category/how-to/" rel="category tag">How To</a></li>
+<li class="comments"><a href="https://www.linuxtechi.com/install-configure-jenkins-on-centos-7-rhel-7/#comments"><i class="far fa-comments"></i>8</a></li>
+</ul>
+</div>
+<div class="pad group">
+<article class="post-4441 post type-post status-publish format-standard has-post-thumbnail hentry category-how-to tag-jenkins-continues-integration-tool">
+<div class="post-inner group">
+<h1 class="post-title entry-title">How to install and Configure Jenkins on CentOS 7 and RHEL 7</h1>
+<p class="post-byline">by <span class="vcard author">
+<span class="fn"><a href="https://www.linuxtechi.com/author/pradeep/" title="Posts by Pradeep Kumar" rel="author">Pradeep Kumar</a></span>
+</span> &middot;
+Published <time class="published" datetime="August 8, 2016">August 8, 2016</time>
+&middot; Updated <time class="updated" datetime="October 9, 2018">October 9, 2018</time>
+</p>
+<div class="clear"></div>
+<div class="entry themeform share">
+<div class="entry-inner">
+<p>Jenkins is free and open source continues integration tool and it’s code is written in Java. It provides the feature of continues build and deployment or in other words we can say it is a automation server. Jenkins are used where continues build and integration is going on for software development.</p>
+<p>In this post i will discuss how to install and configure Jenkins on CentOS 7 and RHEL 7.</p>
+<h4><span style="color: #800080;">Step:1 Add Jenkins Repository</span></h4>
+<p>Jenkins package is not available in the default CentOS and RHEL repositories. So we need to add jenkins repository using the beneath commands.</p><div class="Imk7uyZ2" style="clear:both;float:left;width:100%;margin:0 0 20px 0;"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" type="a287e5e2e8ae3f667e2ceee5-text/javascript"></script>
+<ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-2130177517648108" data-ad-slot="3075279854"></ins>
+<script type="a287e5e2e8ae3f667e2ceee5-text/javascript">
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script></div>
+<pre>[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2f5d40405b6f454a414446415c">[email&#160;protected]</a> ~]# wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins.io/redhat-stable/jenkins.repo
+[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="097b66667d49636c676260677a">[email&#160;protected]</a> ~]# rpm --import http://pkg.jenkins.io/redhat-stable/jenkins.io.key</pre>
+<h4><span style="color: #800080;">Step:2 Install Jenkins and Java</span></h4>
+<p>Run the below  yum command to install Jenkins and java.</p>
+<pre>[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="81f3eeeef5c1ebe4efeae8eff2">[email&#160;protected]</a> ~]# yum install jenkins java-1.8.0-openjdk –y</pre>
+<h4><span style="color: #800080;">Step:3 Start and Enable Jenkins Service</span></h4>
+<p>Run the following systemctl commands to start and enable the jenkins service</p>
+<pre>[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1f6d70706b5f757a717476716c">[email&#160;protected]</a> ~]# systemctl start jenkins
+[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="91e3fefee5d1fbf4fffaf8ffe2">[email&#160;protected]</a> ~]# systemctl enable jenkins</pre>
+<h4><span style="color: #800080;">Step:4 Open the ports (80 and 8080) in OS firewall.</span></h4>
+<p>In case firewall is enabled on your Linux server then run the following commands to open jenkins related ports like 80 and 8080.</p>
+<pre>[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="85f7eaeaf1c5efe0ebeeecebf6">[email&#160;protected]</a> ~]# firewall-cmd --zone=public --add-port=8080/tcp --permanent
+success
+[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7705181803371d12191c1e1904">[email&#160;protected]</a> ~]# firewall-cmd --zone=public --add-service=http --permanent
+success
+[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c6b4a9a9b286aca3a8adafa8b5">[email&#160;protected]</a> ~]# firewall-cmd --reload
+success
+[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="94e6fbfbe0d4fef1fafffdfae7">[email&#160;protected]</a> ~]#</pre>
+<h5><span style="color: #800080;">Step:5 Access the Jenkins Web portal</span></h5>
+<p>Access the URL : http://&lt;Ip-Address-of-your-Server&gt;:8080</p>
+<p><a href="https://www.linuxtechi.com/wp-content/uploads/2016/08/Jenkins-administrator-password-centos7.jpg" data-rel="lightbox-image-0" data-rl_title="" data-rl_caption="" title=""><img class="alignnone wp-image-4461" src="https://www.linuxtechi.com/wp-content/uploads/2016/08/Jenkins-administrator-password-centos7-1024x557.jpg" alt="Jenkins-administrator-password-centos7" width="752" height="409" /></a></p>
+<p>Admin password is created and stored in the log file  &#8220;<strong>/var/log/jenkins/jenkins.log</strong>&#8220;. Run the below command to get the password.</p>
+<pre>[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="55273a3a21153f303b3e3c3b26">[email&#160;protected]</a> ~]# grep -A 5 password /var/log/jenkins/jenkins.log</pre>
+<p>Copy the password and paste it in above windows and click on Continue..</p>
+<p>In the next windows Select the option : <strong>Install suggested plugins</strong></p>
+<p><a href="https://www.linuxtechi.com/wp-content/uploads/2016/08/SetupWizard-Jenkins-Centos7.jpg" data-rel="lightbox-image-1" data-rl_title="" data-rl_caption="" title=""><img class="alignnone wp-image-4465" src="https://www.linuxtechi.com/wp-content/uploads/2016/08/SetupWizard-Jenkins-Centos7-1024x557.jpg" alt="SetupWizard-Jenkins-Centos7" width="752" height="409" /></a></p>
+<p><a href="https://www.linuxtechi.com/wp-content/uploads/2016/08/SetupWizard-Jenkins-plugin-installation.jpg" data-rel="lightbox-image-2" data-rl_title="" data-rl_caption="" title=""><img class="alignnone wp-image-4466" src="https://www.linuxtechi.com/wp-content/uploads/2016/08/SetupWizard-Jenkins-plugin-installation-1024x557.jpg" alt="SetupWizard-Jenkins-plugin-installation" width="752" height="409" /></a></p>
+<p>As we can see required plugin installation is in progress for Jenkins. Once it is done with plugin installation. It will ask to create Admin User</p>
+<p><a href="https://www.linuxtechi.com/wp-content/uploads/2016/08/Admin-User-Jenkins-Portal-Centos7.jpg" data-rel="lightbox-image-3" data-rl_title="" data-rl_caption="" title=""><img class="alignnone wp-image-4468" src="https://www.linuxtechi.com/wp-content/uploads/2016/08/Admin-User-Jenkins-Portal-Centos7-1024x557.jpg" alt="Admin-User-Jenkins-Portal-Centos7" width="752" height="409" /></a></p>
+<p>Click on Save and Finish</p>
+<p><a href="https://www.linuxtechi.com/wp-content/uploads/2016/08/Jenkins-Installation-Completed-Message.jpg" data-rel="lightbox-image-4" data-rl_title="" data-rl_caption="" title=""><img class="alignnone wp-image-4463" src="https://www.linuxtechi.com/wp-content/uploads/2016/08/Jenkins-Installation-Completed-Message-1024x557.jpg" alt="Jenkins-Installation-Completed-Message" width="752" height="409" /></a></p>
+<p>click on &#8220;<strong>Start using Jenkins</strong>&#8221;</p>
+<p><a href="https://www.linuxtechi.com/wp-content/uploads/2016/08/Jenkins-Dashboard-Centos7.jpg" data-rel="lightbox-image-5" data-rl_title="" data-rl_caption="" title=""><img class="alignnone wp-image-4462" src="https://www.linuxtechi.com/wp-content/uploads/2016/08/Jenkins-Dashboard-Centos7-1024x557.jpg" alt="Jenkins-Dashboard-Centos7" width="753" height="410" /></a></p>
+<p>Now Configure GitHub project using git plugin in Jenkins.</p>
+<p>Let’s Assume I have a &#8216;<strong>cloudtechi&#8217;</strong> project on GitHub and wants to integrate this project in Jenkins using git plugin.</p>
+<p>Let’s first install git package on your machine on which you have installed Jenkins because Jenkins use git command to pull the GitHub project code.</p>
+<pre>[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="91e3fefee5d1fbf4fffaf8ffe2">[email&#160;protected]</a> ~]# yum install git</pre>
+<p>Login to the GitHub and get the Web URL of your project.</p>
+<p><a href="https://www.linuxtechi.com/wp-content/uploads/2016/08/Github-Project-Web-URL.jpg" data-rel="lightbox-image-6" data-rl_title="" data-rl_caption="" title=""><img class="alignnone wp-image-4460" src="https://www.linuxtechi.com/wp-content/uploads/2016/08/Github-Project-Web-URL-1024x557.jpg" alt="Github-Project-Web-URL" width="752" height="409" /></a></p>
+<p>Login to the Jenkins portal, Click on &#8220;<strong>New Item</strong>&#8221;</p>
+<p>Select the Freestyle Project and Specify the name as per your setup, In my case I putting as &#8220;<strong>techi_project</strong>&#8221;</p>
+<p><a href="https://www.linuxtechi.com/wp-content/uploads/2016/08/NewItem-Name-Jenkins-Dashboard-Centos7.jpg" data-rel="lightbox-image-7" data-rl_title="" data-rl_caption="" title=""><img class="alignnone wp-image-4464" src="https://www.linuxtechi.com/wp-content/uploads/2016/08/NewItem-Name-Jenkins-Dashboard-Centos7-1024x557.jpg" alt="NewItem-Name-Jenkins-Dashboard-Centos7" width="753" height="410" /></a></p>
+<p>Click on OK</p>
+<p>Specify the Project Description and Select Git option in Source Code Management Tab and specify the Web URL of your GitHub Project and its credentials. In the Build Tab select the option that suits your setup and then finally click on Apply.</p>
+<p><a href="https://www.linuxtechi.com/wp-content/uploads/2016/08/GitHub-Project-Credentials-Jenkins-Centos7.jpg" data-rel="lightbox-image-8" data-rl_title="" data-rl_caption="" title=""><img class="alignnone size-large wp-image-4459" src="https://www.linuxtechi.com/wp-content/uploads/2016/08/GitHub-Project-Credentials-Jenkins-Centos7-705x1024.jpg" alt="GitHub-Project-Credentials-Jenkins-Centos7" width="705" height="1024" /></a></p>
+<p>In the Next step click on the &#8220;<strong>Build Now</strong>&#8221; option from Jenkins Dashboard to pull the GitHub Project Code.</p>
+<p><a href="https://www.linuxtechi.com/wp-content/uploads/2016/08/Build-GitHub-ProjectCode-Jenkins.jpg" data-rel="lightbox-image-9" data-rl_title="" data-rl_caption="" title=""><img class="alignnone wp-image-4458" src="https://www.linuxtechi.com/wp-content/uploads/2016/08/Build-GitHub-ProjectCode-Jenkins-1024x557.jpg" alt="Build-GitHub-ProjectCode-Jenkins" width="753" height="410" /></a></p>
+<p>Click on the Workspace Option to view Code or files of GitHub Project. Whenever a new code is pushed on the GitHub project it will be automatically push to Jenkins workspace with new versions.</p>
+<p><a href="https://www.linuxtechi.com/wp-content/uploads/2016/08/Workspace-GitHub-Project-Jenkins.jpg" data-rel="lightbox-image-10" data-rl_title="" data-rl_caption="" title=""><img class="alignnone wp-image-4467" src="https://www.linuxtechi.com/wp-content/uploads/2016/08/Workspace-GitHub-Project-Jenkins-1024x557.jpg" alt="Workspace-GitHub-Project-Jenkins" width="753" height="410" /></a></p>
+<p>we can also view the project workspace from terminal as well.</p>
+<pre>[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b6c4d9d9c2f6dcd3d8dddfd8c5">[email&#160;protected]</a> ~]# cd /var/lib/jenkins/workspace/techi_project/
+[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="30425f5f44705a555e5b595e43">[email&#160;protected]</a> techi_project]# ls -l
+total 12
+-rw-r--r--. 1 jenkins jenkins 63 Aug  7 03:23 cloudstack
+-rw-r--r--. 1 jenkins jenkins 13 Aug  7 03:23 README.md
+-rw-r--r--. 1 jenkins jenkins 84 Aug  7 03:23 testing.md
+[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5c2e3333281c3639323735322f">[email&#160;protected]</a> techi_project]#</pre>
+<p>We can this code to deploy on other machines as well. That’s all, Basic Jenkins installation and configuration is completed 🙂</p>
+<nav class="pagination group">
+</nav>
+</div>
+<div class="sharrre-container ">
+<span>Share</span>
+<div id="twitter" data-url="https://www.linuxtechi.com/install-configure-jenkins-on-centos-7-rhel-7/" data-text="How to install and Configure Jenkins on CentOS 7 and RHEL 7" data-title="Tweet"><a class="box" href="#"><div class="count" href="#"><i class="fas fa-plus"></i></div><div class="share"><i class="fab fa-twitter"></i></div></a></div>
+<div id="facebook" data-url="https://www.linuxtechi.com/install-configure-jenkins-on-centos-7-rhel-7/" data-text="How to install and Configure Jenkins on CentOS 7 and RHEL 7" data-title="Like"></div>
+<div id="pinterest" data-url="https://www.linuxtechi.com/install-configure-jenkins-on-centos-7-rhel-7/" data-text="How to install and Configure Jenkins on CentOS 7 and RHEL 7" data-title="Pin It"></div>
+<div id="linkedin" data-url="https://www.linuxtechi.com/install-configure-jenkins-on-centos-7-rhel-7/" data-text="How to install and Configure Jenkins on CentOS 7 and RHEL 7" data-title="Publish on Linked In"></div>
+</div>
+<style type="text/css"></style>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="a287e5e2e8ae3f667e2ceee5-text/javascript">
+  	// Sharrre
+  	jQuery( function($) {
+      //<temporary>
+      $('head').append( $( '<style>', { id : 'hide-sharre-count', type : 'text/css', html:'.sharrre-container.no-counter .box .count {display:none;}' } ) );
+      //</temporary>
+                		$('#twitter').sharrre({
+        			share: {
+        				twitter: true
+        			},
+        			template: '<a class="box" href="#"><div class="count" href="#"><i class="fa fa-plus"></i></div><div class="share"><i class="fab fa-twitter"></i></div></a>',
+        			enableHover: false,
+        			enableTracking: true,
+        			buttons: { twitter: {via: 'linuxtechi'}},
+        			click: function(api, options){
+        				api.simulateClick();
+        				api.openPopup('twitter');
+        			}
+        		});
+            		            $('#facebook').sharrre({
+        			share: {
+        				facebook: true
+        			},
+        			template: '<a class="box" href="#"><div class="count" href="#"><i class="fa fa-plus"></i></div><div class="share"><i class="fab fa-facebook-square"></i></div></a>',
+        			enableHover: false,
+        			enableTracking: true,
+              buttons:{layout: 'box_count'},
+        			click: function(api, options){
+        				api.simulateClick();
+        				api.openPopup('facebook');
+        			}
+        		});
+                        		$('#pinterest').sharrre({
+        			share: {
+        				pinterest: true
+        			},
+        			template: '<a class="box" href="#" rel="nofollow"><div class="count" href="#"><i class="fa fa-plus"></i></div><div class="share"><i class="fab fa-pinterest"></i></div></a>',
+        			enableHover: false,
+        			enableTracking: true,
+        			buttons: {
+        			pinterest: {
+        				description: 'How to install and Configure Jenkins on CentOS 7 and RHEL 7',media: 'https://www.linuxtechi.com/wp-content/uploads/2016/08/Jenkins-on-CentOS7-RHEL7-1.jpg'        				}
+        			},
+        			click: function(api, options){
+        				api.simulateClick();
+        				api.openPopup('pinterest');
+        			}
+        		});
+                            $('#linkedin').sharrre({
+              share: {
+                linkedin: true
+              },
+              template: '<a class="box" href="#" rel="nofollow"><div class="count" href="#"><i class="fa fa-plus"></i></div><div class="share"><i class="fab fa-linkedin"></i></div></a>',
+              enableHover: false,
+              enableTracking: true,
+              buttons: {
+              linkedin: {
+                description: 'How to install and Configure Jenkins on CentOS 7 and RHEL 7',media: 'https://www.linuxtechi.com/wp-content/uploads/2016/08/Jenkins-on-CentOS7-RHEL7-1.jpg'                }
+              },
+              click: function(api, options){
+                api.simulateClick();
+                api.openPopup('linkedin');
+              }
+            });
+        
+    		
+    			// Scrollable sharrre bar, contributed by Erik Frye. Awesome!
+    			var $_shareContainer = $(".sharrre-container"),
+    			    $_header         = $('#header'),
+    			    $_postEntry      = $('.entry'),
+        			$window          = $(window),
+        			startSharePosition = $_shareContainer.offset(),//object
+        			contentBottom    = $_postEntry.offset().top + $_postEntry.outerHeight(),
+        			topOfTemplate    = $_header.offset().top,
+              topSpacing       = _setTopSpacing();
+
+          //triggered on scroll
+    			shareScroll = function(){
+      				var scrollTop     = $window.scrollTop() + topOfTemplate,
+      				    stopLocation  = contentBottom - ($_shareContainer.outerHeight() + topSpacing);
+
+              $_shareContainer.css({position : 'fixed'});
+
+      				if( scrollTop > stopLocation ){
+      					  $_shareContainer.css( { position:'relative' } );
+                  $_shareContainer.offset(
+                      {
+                        top: contentBottom - $_shareContainer.outerHeight(),
+                        left: startSharePosition.left,
+                      }
+                  );
+      				}
+      				else if (scrollTop >= $_postEntry.offset().top - topSpacing){
+      					 $_shareContainer.css( { position:'fixed',top: '100px' } );
+                 $_shareContainer.offset(
+                      {
+                        //top: scrollTop + topSpacing,
+                        left: startSharePosition.left,
+                      }
+                  );
+      				} else if (scrollTop < startSharePosition.top + ( topSpacing - 1 ) ) {
+      					 $_shareContainer.css( { position:'relative' } );
+                 $_shareContainer.offset(
+                      {
+                        top: $_postEntry.offset().top,
+                        left:startSharePosition.left,
+                      }
+                  );
+      				}
+    			},
+
+          //triggered on resize
+    			shareMove = function() {
+      				startSharePosition = $_shareContainer.offset();
+      				contentBottom = $_postEntry.offset().top + $_postEntry.outerHeight();
+      				topOfTemplate = $_header.offset().top;
+      				_setTopSpacing();
+    			};
+
+    			/* As new images load the page content body gets longer. The bottom of the content area needs to be adjusted in case images are still loading. */
+    			setTimeout( function() {
+    				  contentBottom = $_postEntry.offset().top + $_postEntry.outerHeight();
+    			}, 2000);
+
+          function _setTopSpacing(){
+              var distanceFromTop  = 20;
+
+              if( $window.width() > 1024 ) {
+                topSpacing = distanceFromTop + $('.nav-wrap').outerHeight();
+              } else {
+                topSpacing = distanceFromTop;
+              }
+              return topSpacing;
+          }
+
+          //setup event listeners
+          $window.scroll( _.throttle( function() {
+              if ( $window.width() > 719 ) {
+                  shareScroll();
+              } else {
+                  $_shareContainer.css({
+                      top:'',
+                      left:'',
+                      position:''
+                  })
+              }
+          }, 50 ) );
+          $window.resize( _.debounce( function() {
+              if ( $window.width() > 719 ) {
+                  shareMove();
+              } else {
+                  $_shareContainer.css({
+                      top:'',
+                      left:'',
+                      position:''
+                  })
+              }
+          }, 50 ) );
+    		
+  	});
+</script>
+<div class="clear"></div>
+</div>
+</div>
+</article>
+<div class="clear"></div>
+<p class="post-tags"><span>Tags:</span> <a href="https://www.linuxtechi.com/tag/jenkins-continues-integration-tool/" rel="tag">Jenkins continues integration tool</a></p>
+<ul class="post-nav group">
+<li class="next"><a href="https://www.linuxtechi.com/install-apache-tomcat9-centos7-rhel7-ubuntu16-04/" rel="next"><i class="fas fa-chevron-right"></i><strong>Next story</strong> <span>Install Apache Tomcat 9 on CentOS 7 / RHEL 7 / Ubuntu 16.04</span></a></li>
+<li class="previous"><a href="https://www.linuxtechi.com/autocad-alternative-tools-for-ubuntu-linuxmint-users/" rel="prev"><i class="fas fa-chevron-left"></i><strong>Previous story</strong> <span>AutoCAD Alternative Tools for Ubuntu and Linux Mint Users</span></a></li>
+</ul>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" type="a287e5e2e8ae3f667e2ceee5-text/javascript"></script>
+<ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-2130177517648108" data-ad-slot="5924076189"></ins>
+<script type="a287e5e2e8ae3f667e2ceee5-text/javascript">
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+<section id="comments" class="themeform">
+<h3 class="heading">8 Responses</h3>
+<ul class="comment-tabs group">
+<li class="active"><a href="#commentlist-container"><i class="far fa-comments"></i>Comments<span>8</span></a></li>
+<li><a href="#pinglist-container"><i class="fas fa-share"></i>Pingbacks<span>0</span></a></li>
+</ul>
+<div id="commentlist-container" class="comment-tab">
+<ol class="commentlist">
+<li class="comment even thread-even depth-1 parent" id="comment-1387">
+<div id="div-comment-1387" class="comment-body">
+<div class="comment-author vcard">
+<img alt='' src='https://secure.gravatar.com/avatar/e1189092fd8967795a94129a0f6c0883?s=48&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/e1189092fd8967795a94129a0f6c0883?s=96&#038;d=mm&#038;r=g 2x' class='avatar avatar-48 photo' height='48' width='48' /> <cite class="fn">Mohanish Mahajan</cite> <span class="says">says:</span> </div>
+<div class="comment-meta commentmetadata"><a href="https://www.linuxtechi.com/install-configure-jenkins-on-centos-7-rhel-7/#comment-1387">
+September 26, 2017 at 10:15 am </a>
+</div>
+<p>hi,</p>
+<p>I used RHEL7 and followed above commands. However the server is not listening on 8080. I tried to do a telnet from localhost but it says connection refused.<br />
+Please if any help.<br />
+Also no log file getting generated under /etc/var/log/jenkins</p>
+<div class="reply"><a rel='nofollow' class='comment-reply-link' href='/install-configure-jenkins-on-centos-7-rhel-7/?replytocom=1387#respond' data-commentid="1387" data-postid="4441" data-belowelement="div-comment-1387" data-respondelement="respond" aria-label='Reply to Mohanish Mahajan'>Reply</a></div>
+</div>
+<ul class="children">
+<li class="comment byuser comment-author-pradeep bypostauthor odd alt depth-2" id="comment-1401">
+<div id="div-comment-1401" class="comment-body">
+<div class="comment-author vcard">
+<img alt='' src='https://secure.gravatar.com/avatar/aee3114362d9999a6c9612d041d34f49?s=48&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/aee3114362d9999a6c9612d041d34f49?s=96&#038;d=mm&#038;r=g 2x' class='avatar avatar-48 photo' height='48' width='48' /> <cite class="fn"><a href='https://www.linuxtechi.com' rel='external nofollow' class='url'>Pradeep Kumar</a></cite> <span class="says">says:</span> </div>
+<div class="comment-meta commentmetadata"><a href="https://www.linuxtechi.com/install-configure-jenkins-on-centos-7-rhel-7/#comment-1401">
+September 27, 2017 at 3:18 am </a>
+</div>
+<p>Please check whether Jenkins service is running or not, In case it is not running then try to start its service and see the logs.</p>
+<div class="reply"><a rel='nofollow' class='comment-reply-link' href='/install-configure-jenkins-on-centos-7-rhel-7/?replytocom=1401#respond' data-commentid="1401" data-postid="4441" data-belowelement="div-comment-1401" data-respondelement="respond" aria-label='Reply to Pradeep Kumar'>Reply</a></div>
+</div>
+</li>
+</ul>
+</li>
+<li class="comment even thread-odd thread-alt depth-1 parent" id="comment-1988">
+<div id="div-comment-1988" class="comment-body">
+<div class="comment-author vcard">
+<img alt='' src='https://secure.gravatar.com/avatar/63d5e0ebae20423df63a23b700b57083?s=48&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/63d5e0ebae20423df63a23b700b57083?s=96&#038;d=mm&#038;r=g 2x' class='avatar avatar-48 photo' height='48' width='48' /> <cite class="fn">nafish shahzad</cite> <span class="says">says:</span> </div>
+<div class="comment-meta commentmetadata"><a href="https://www.linuxtechi.com/install-configure-jenkins-on-centos-7-rhel-7/#comment-1988">
+November 8, 2017 at 12:31 pm </a>
+</div>
+<p>check whether it is used by another process or not<br />
+netstat -anp |grep 8080</p>
+<div class="reply"><a rel='nofollow' class='comment-reply-link' href='/install-configure-jenkins-on-centos-7-rhel-7/?replytocom=1988#respond' data-commentid="1988" data-postid="4441" data-belowelement="div-comment-1988" data-respondelement="respond" aria-label='Reply to nafish shahzad'>Reply</a></div>
+</div>
+<ul class="children">
+<li class="comment odd alt depth-2" id="comment-5637">
+<div id="div-comment-5637" class="comment-body">
+<div class="comment-author vcard">
+<img alt='' src='https://secure.gravatar.com/avatar/44bb575b5b75c6f8ac228be08efcde88?s=48&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/44bb575b5b75c6f8ac228be08efcde88?s=96&#038;d=mm&#038;r=g 2x' class='avatar avatar-48 photo' height='48' width='48' /> <cite class="fn">Siddhesh_Khedekar</cite> <span class="says">says:</span> </div>
+<div class="comment-meta commentmetadata"><a href="https://www.linuxtechi.com/install-configure-jenkins-on-centos-7-rhel-7/#comment-5637">
+August 23, 2018 at 11:23 am </a>
+</div>
+<p>I have same issue as Mohanish. Tried Suggestions from Pradeep and Mohanish but no success.<br />
+Any suggestions? I am working on Virtual box Centos7 image.</p>
+<div class="reply"><a rel='nofollow' class='comment-reply-link' href='/install-configure-jenkins-on-centos-7-rhel-7/?replytocom=5637#respond' data-commentid="5637" data-postid="4441" data-belowelement="div-comment-5637" data-respondelement="respond" aria-label='Reply to Siddhesh_Khedekar'>Reply</a></div>
+</div>
+</li>
+</ul>
+</li>
+<li class="comment even thread-even depth-1" id="comment-3761">
+<div id="div-comment-3761" class="comment-body">
+<div class="comment-author vcard">
+<img alt='' src='https://secure.gravatar.com/avatar/de619aa79b43b1c3384e810fc165a456?s=48&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/de619aa79b43b1c3384e810fc165a456?s=96&#038;d=mm&#038;r=g 2x' class='avatar avatar-48 photo' height='48' width='48' /> <cite class="fn">Vineeth</cite> <span class="says">says:</span> </div>
+<div class="comment-meta commentmetadata"><a href="https://www.linuxtechi.com/install-configure-jenkins-on-centos-7-rhel-7/#comment-3761">
+March 20, 2018 at 5:24 am </a>
+</div>
+<p>Very nice explanation!</p>
+<div class="reply"><a rel='nofollow' class='comment-reply-link' href='/install-configure-jenkins-on-centos-7-rhel-7/?replytocom=3761#respond' data-commentid="3761" data-postid="4441" data-belowelement="div-comment-3761" data-respondelement="respond" aria-label='Reply to Vineeth'>Reply</a></div>
+</div>
+</li>
+<li class="comment odd alt thread-odd thread-alt depth-1" id="comment-5638">
+<div id="div-comment-5638" class="comment-body">
+<div class="comment-author vcard">
+<img alt='' src='https://secure.gravatar.com/avatar/44bb575b5b75c6f8ac228be08efcde88?s=48&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/44bb575b5b75c6f8ac228be08efcde88?s=96&#038;d=mm&#038;r=g 2x' class='avatar avatar-48 photo' height='48' width='48' /> <cite class="fn">Siddhesh_Khedekar</cite> <span class="says">says:</span> </div>
+<div class="comment-meta commentmetadata"><a href="https://www.linuxtechi.com/install-configure-jenkins-on-centos-7-rhel-7/#comment-5638">
+August 23, 2018 at 11:44 am </a>
+</div>
+<p>Hi<br />
+I am facing same issue as Mohanish.<br />
+When I do : netstat -anp |grep 8080 , No output is coming.<br />
+However when I do : sudo service jenkins status, below output is coming &#8211;<br />
+jenkins.service &#8211; LSB: Jenkins Automation Server<br />
+Loaded: loaded (/etc/rc.d/init.d/jenkins; bad; vendor preset: disabled)<br />
+Active: active (exited) since Thu 2018-08-23 11:39:01 EDT; 1h 22min ago<br />
+Docs: man:systemd-sysv-generator(8)</p>
+<p>Aug 23 11:39:00 l-156063904.wipro.com systemd[1]: Starting LSB: Jenkins Automation Server&#8230;<br />
+Aug 23 11:39:00 l-156063904.wipro.com runuser[1643]: pam_unix(runuser:session): session op&#8230;0)<br />
+Aug 23 11:39:01 l-156063904.wipro.com jenkins[1638]: Starting Jenkins Jenkins requires Jav&#8230;re<br />
+Aug 23 11:39:01 l-156063904.wipro.com jenkins[1638]: java.lang.UnsupportedClassVersionErro&#8230;.0<br />
+Aug 23 11:39:01 l-156063904.wipro.com jenkins[1638]: at Main.main(Main.java:128)<br />
+Aug 23 11:39:01 l-156063904.wipro.com jenkins[1638]: [ OK ]<br />
+Aug 23 11:39:01 l-156063904.wipro.com systemd[1]: Started LSB: Jenkins Automation Server.</p>
+<p>Any suggestions?</p>
+<div class="reply"><a rel='nofollow' class='comment-reply-link' href='/install-configure-jenkins-on-centos-7-rhel-7/?replytocom=5638#respond' data-commentid="5638" data-postid="4441" data-belowelement="div-comment-5638" data-respondelement="respond" aria-label='Reply to Siddhesh_Khedekar'>Reply</a></div>
+</div>
+</li>
+<li class="comment even thread-even depth-1" id="comment-6791">
+<div id="div-comment-6791" class="comment-body">
+<div class="comment-author vcard">
+<img alt='' src='https://secure.gravatar.com/avatar/04c80f0d04213a5b33ee6d6b18e453c2?s=48&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/04c80f0d04213a5b33ee6d6b18e453c2?s=96&#038;d=mm&#038;r=g 2x' class='avatar avatar-48 photo' height='48' width='48' /> <cite class="fn">Franck Gros-Dubois</cite> <span class="says">says:</span> </div>
+<div class="comment-meta commentmetadata"><a href="https://www.linuxtechi.com/install-configure-jenkins-on-centos-7-rhel-7/#comment-6791">
+December 14, 2018 at 2:58 am </a>
+</div>
+<p>hi, the best way to know which port Jenkins is running is to read the jenkins.service<br />
+If you install Jenkins by yourself, by downloading the war, you need to write it yourself.<br />
+If you use the yum install, then you need to find that file.<br />
+A find | grep should help you. you need to find this line : </p>
+<p>path_to_your_java/java -jar path_to_jenkins.war/jenkins.war &#8211;httpPort=your_port</p>
+<p>With a yum install this line will be with variables. You need to track it.<br />
+Then, you&#8217;ll know what is your port for Jenkins.</p>
+<p>Regards,</p>
+<div class="reply"><a rel='nofollow' class='comment-reply-link' href='/install-configure-jenkins-on-centos-7-rhel-7/?replytocom=6791#respond' data-commentid="6791" data-postid="4441" data-belowelement="div-comment-6791" data-respondelement="respond" aria-label='Reply to Franck Gros-Dubois'>Reply</a></div>
+</div>
+</li>
+<li class="comment odd alt thread-odd thread-alt depth-1" id="comment-9106">
+<div id="div-comment-9106" class="comment-body">
+<div class="comment-author vcard">
+<img alt='' src='https://secure.gravatar.com/avatar/2e7e046fb1563d2c1a2d7fea10a7d18d?s=48&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/2e7e046fb1563d2c1a2d7fea10a7d18d?s=96&#038;d=mm&#038;r=g 2x' class='avatar avatar-48 photo' height='48' width='48' /> <cite class="fn">Andy</cite> <span class="says">says:</span> </div>
+<div class="comment-meta commentmetadata"><a href="https://www.linuxtechi.com/install-configure-jenkins-on-centos-7-rhel-7/#comment-9106">
+April 12, 2019 at 11:26 am </a>
+</div>
+<p>Hey my friend,</p>
+<p>Excellent article &#8211; really helped me.</p>
+<p>One very minor thing, &#8220;Jenkins is free and open source continues integration tool&#8230;&#8221;, that continues ought to be continuous.</p>
+<p>Thanks again.</p>
+<div class="reply"><a rel='nofollow' class='comment-reply-link' href='/install-configure-jenkins-on-centos-7-rhel-7/?replytocom=9106#respond' data-commentid="9106" data-postid="4441" data-belowelement="div-comment-9106" data-respondelement="respond" aria-label='Reply to Andy'>Reply</a></div>
+</div>
+</li>
+</ol>
+</div>
+<div id="respond" class="comment-respond">
+<h3 id="reply-title" class="comment-reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="/install-configure-jenkins-on-centos-7-rhel-7/#respond" style="display:none;">Cancel reply</a></small></h3> <form action="https://www.linuxtechi.com/wp-comments-post.php" method="post" id="commentform" class="comment-form">
+<p class="comment-notes"><span id="email-notes">Your email address will not be published.</span> Required fields are marked <span class="required">*</span></p><p class="comment-form-comment"><label for="comment">Comment</label> <textarea autocomplete="nope" id="i72316ca12" name="i72316ca12" cols="45" rows="8" maxlength="65525" required="required"></textarea><textarea id="comment" aria-hidden="true" name="comment" autocomplete="nope" style="padding:0;clip:rect(1px, 1px, 1px, 1px);position:absolute !important;white-space:nowrap;height:1px;width:1px;overflow:hidden;" tabindex="-1"></textarea><script type="a287e5e2e8ae3f667e2ceee5-text/javascript">document.getElementById("comment").setAttribute( "id", "ab8b1bf29d3c779002a0c0364ee8c702" );document.getElementById("i72316ca12").setAttribute( "id", "comment" );</script></p><p class="comment-form-author"><label for="author">Name <span class="required">*</span></label> <input id="author" name="author" type="text" value="" size="30" maxlength="245" required='required' /></p>
+<p class="comment-form-email"><label for="email">Email <span class="required">*</span></label> <input id="email" name="email" type="text" value="" size="30" maxlength="100" aria-describedby="email-notes" required='required' /></p>
+<p class="comment-form-url"><label for="url">Website</label> <input id="url" name="url" type="text" value="" size="30" maxlength="200" /></p>
+<p class="cptch_block"><span class="cptch_wrap cptch_math_actions">
+<label class="cptch_label" for="cptch_input_62"><span class="cptch_span">&#110;in&#101;</span>
+<span class="cptch_span">&nbsp;&minus;&nbsp;</span>
+<span class="cptch_span">9</span>
+<span class="cptch_span">&nbsp;=&nbsp;</span>
+<span class="cptch_span"><input id="cptch_input_62" class="cptch_input cptch_wp_comments" type="text" autocomplete="off" name="cptch_number" value="" maxlength="2" size="2" aria-required="true" required="required" style="margin-bottom:0;display:inline;font-size: 12px;width: 40px;" /></span>
+<input type="hidden" name="cptch_result" value="RF0=" /><input type="hidden" name="cptch_time" value="1561976755" />
+<input type="hidden" name="cptch_form" value="wp_comments" />
+</label><span class="cptch_reload_button_wrap hide-if-no-js">
+<noscript>
+						<style type="text/css">
+							.hide-if-no-js {
+								display: none !important;
+							}
+						</style>
+					</noscript>
+<span class="cptch_reload_button dashicons dashicons-update"></span>
+</span></span></p><p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="Post Comment" /> <input type='hidden' name='comment_post_ID' value='4441' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p> </form>
+</div>
+</section>  </div>
+</section>
+<div class="sidebar s1 collapsed" data-position="right" data-layout="col-2cl" data-sb-id="s1">
+<a class="sidebar-toggle" title="Expand Sidebar"><i class="fas icon-sidebar-toggle"></i></a>
+<div class="sidebar-content">
+<div class="sidebar-top group">
+<p>Follow:</p>
+<ul class="social-links"><li><a rel="nofollow" class="social-tooltip" title="Follow us on Facebook" aria-label="Follow us on Facebook" href="http://www.facebook.com/linuxtechi" target="_blank" style="color:rgba(255,255,255,0.7)"><i class="fab fa-facebook"></i></a></li><li><a rel="nofollow" class="social-tooltip" title="Follow us on Twitter" aria-label="Follow us on Twitter" href="http://www.twitter.com/linuxtechi" target="_blank" style="color:rgba(255,255,255,0.7)"><i class="fab fa-twitter"></i></a></li><li><a rel="nofollow" class="social-tooltip" title="Follow us on Rss" aria-label="Follow us on Rss" href="https://www.linuxtechi.com/feed" target="_blank" style="color:rgba(255,255,255,0.7)"><i class="fas fa-rss"></i></a></li></ul> </div>
+<div id="text-9" class="widget widget_text"> <div class="textwidget"><p><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" type="a287e5e2e8ae3f667e2ceee5-text/javascript"></script><br />
+<br />
+<ins class="adsbygoogle" style="display: inline-block; width: 300px; height: 600px;" data-ad-client="ca-pub-2130177517648108" data-ad-slot="7532375294"></ins><br />
+<script type="a287e5e2e8ae3f667e2ceee5-text/javascript">
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script></p>
+</div>
+</div> <div id="wp_subscribe-2" class="widget wp_subscribe">
+<div id="wp-subscribe" class="wp-subscribe-wrap wp-subscribe wp-subscribe-1" data-thanks_page="0" data-thanks_page_url="" data-thanks_page_new_window="0">
+<h4 class="title">Subscribe to Newsletter</h4>
+<p class="text"></p>
+<form action="https://feedburner.google.com/fb/a/mailverify?uri=linuxteci" method="post" class="wp-subscribe-form wp-subscribe-feedburner" id="wp-subscribe-form-1" target="popupwindow">
+<input class="regular-text email-field" type="email" name="email" placeholder="Enter your email here" required>
+<input type="hidden" name="uri" value="linuxteci">
+<input type="hidden" name="loc" value="en_US">
+<input type="hidden" name="form_type" value="widget">
+<input type="hidden" name="service" value="feedburner">
+<input type="hidden" name="widget" value="wp_subscribe-2">
+<div class="wps-consent-wrapper">
+<label for="consent-field">
+<input class="consent-field" id="consent-field" type="checkbox" name="consent" required />
+I consent to my submitted data being collected via this form* </label>
+</div>
+<input class="submit" type="submit" name="submit" value="Sign Up Now">
+</form>
+<div class="wp-subscribe-loader">
+<svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0" y="0" width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+<path fill="#ffffff" d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z">
+<animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="0.6s" repeatCount="indefinite" />
+</path>
+</svg>
+</div>
+<p class="thanks">Thank you for subscribing.</p>
+<p class="error">Something went wrong.</p>
+<div class="clear"></div>
+<p class="footer-text">we respect your privacy and take protecting it seriously</p>
+</div>
+</div>
+<div id="alxtabs-2" class="widget widget_hu_tabs">
+<h3 class="widget-title">Most Popular Post</h3><ul class="alx-tabs-nav group tab-count-2"><li class="alx-tab tab-recent"><a href="#tab-recent-2" title="Recent Posts"><i class="far fa-clock"></i><span>Recent Posts</span></a></li><li class="alx-tab tab-comments"><a href="#tab-comments-2" title="Recent Comments"><i class="far fa-comments"></i><span>Recent Comments</span></a></li></ul>
+<div class="alx-tabs-container">
+<ul id="tab-recent-2" class="alx-tab group thumbs-enabled">
+<li>
+<div class="tab-item-thumbnail">
+<a href="https://www.linuxtechi.com/record-replay-linux-terminal-sessions-activity/" title="Learn how to Record and Replay Linux Terminal Sessions Activity">
+<img width="160" height="160" src="https://www.linuxtechi.com/wp-content/uploads/2019/06/Record-linux-terminal-session-activity-160x160.jpg" class="attachment-thumb-small size-thumb-small wp-post-image" alt="Record-linux-terminal-session-activity" srcset="https://www.linuxtechi.com/wp-content/uploads/2019/06/Record-linux-terminal-session-activity-160x160.jpg 160w, https://www.linuxtechi.com/wp-content/uploads/2019/06/Record-linux-terminal-session-activity-150x150.jpg 150w, https://www.linuxtechi.com/wp-content/uploads/2019/06/Record-linux-terminal-session-activity-320x320.jpg 320w" sizes="(max-width: 160px) 100vw, 160px" /> </a>
+</div>
+<div class="tab-item-inner group">
+<p class="tab-item-title"><a href="https://www.linuxtechi.com/record-replay-linux-terminal-sessions-activity/" rel="bookmark" title="Learn how to Record and Replay Linux Terminal Sessions Activity">Learn how to Record and Replay Linux Terminal Sessions Activity</a></p>
+</div>
+</li>
+<li>
+<div class="tab-item-thumbnail">
+<a href="https://www.linuxtechi.com/install-configure-kvm-on-rhel-8/" title="How to Install and Configure KVM on RHEL 8">
+<img width="160" height="160" src="https://www.linuxtechi.com/wp-content/uploads/2019/06/Install-KVM-RHEL8-160x160.jpg" class="attachment-thumb-small size-thumb-small wp-post-image" alt="Install-KVM-RHEL8" srcset="https://www.linuxtechi.com/wp-content/uploads/2019/06/Install-KVM-RHEL8-160x160.jpg 160w, https://www.linuxtechi.com/wp-content/uploads/2019/06/Install-KVM-RHEL8-150x150.jpg 150w, https://www.linuxtechi.com/wp-content/uploads/2019/06/Install-KVM-RHEL8-320x320.jpg 320w" sizes="(max-width: 160px) 100vw, 160px" /> </a>
+</div>
+<div class="tab-item-inner group">
+<p class="tab-item-title"><a href="https://www.linuxtechi.com/install-configure-kvm-on-rhel-8/" rel="bookmark" title="How to Install and Configure KVM on RHEL 8">How to Install and Configure KVM on RHEL 8</a></p>
+</div>
+</li>
+<li>
+<div class="tab-item-thumbnail">
+<a href="https://www.linuxtechi.com/vlan-tagged-nic-ethernet-card-centos-rhel-servers/" title="How to Use VLAN tagged NIC (Ethernet Card) on CentOS and RHEL Servers">
+<img width="160" height="160" src="https://www.linuxtechi.com/wp-content/uploads/2019/06/VLAN-Tagged-NIC-Linux-Server-160x160.jpg" class="attachment-thumb-small size-thumb-small wp-post-image" alt="VLAN-Tagged-NIC-Linux-Server" srcset="https://www.linuxtechi.com/wp-content/uploads/2019/06/VLAN-Tagged-NIC-Linux-Server-160x160.jpg 160w, https://www.linuxtechi.com/wp-content/uploads/2019/06/VLAN-Tagged-NIC-Linux-Server-150x150.jpg 150w, https://www.linuxtechi.com/wp-content/uploads/2019/06/VLAN-Tagged-NIC-Linux-Server-320x320.jpg 320w" sizes="(max-width: 160px) 100vw, 160px" /> </a>
+</div>
+<div class="tab-item-inner group">
+<p class="tab-item-title"><a href="https://www.linuxtechi.com/vlan-tagged-nic-ethernet-card-centos-rhel-servers/" rel="bookmark" title="How to Use VLAN tagged NIC (Ethernet Card) on CentOS and RHEL Servers">How to Use VLAN tagged NIC (Ethernet Card) on CentOS and RHEL Servers</a></p>
+</div>
+</li>
+<li>
+<div class="tab-item-thumbnail">
+<a href="https://www.linuxtechi.com/zorin-os-15-installation-guide-screenshots/" title="Step by Step Zorin OS 15 Installation Guide with Screenshots">
+<img width="160" height="160" src="https://www.linuxtechi.com/wp-content/uploads/2019/06/Desktop-Screen-Zorin-OS15-160x160.jpg" class="attachment-thumb-small size-thumb-small wp-post-image" alt="Desktop-Screen-Zorin-OS15" srcset="https://www.linuxtechi.com/wp-content/uploads/2019/06/Desktop-Screen-Zorin-OS15-160x160.jpg 160w, https://www.linuxtechi.com/wp-content/uploads/2019/06/Desktop-Screen-Zorin-OS15-150x150.jpg 150w, https://www.linuxtechi.com/wp-content/uploads/2019/06/Desktop-Screen-Zorin-OS15-320x320.jpg 320w" sizes="(max-width: 160px) 100vw, 160px" /> </a>
+</div>
+<div class="tab-item-inner group">
+<p class="tab-item-title"><a href="https://www.linuxtechi.com/zorin-os-15-installation-guide-screenshots/" rel="bookmark" title="Step by Step Zorin OS 15 Installation Guide with Screenshots">Step by Step Zorin OS 15 Installation Guide with Screenshots</a></p>
+</div>
+</li>
+<li>
+<div class="tab-item-thumbnail">
+<a href="https://www.linuxtechi.com/set-ulimit-file-descriptors-limit-linux-servers/" title="How to set ulimit and file descriptors limit on Linux Servers">
+<img width="160" height="160" src="https://www.linuxtechi.com/wp-content/uploads/2019/06/ulimit-number-openfiles-linux-server-160x160.jpg" class="attachment-thumb-small size-thumb-small wp-post-image" alt="ulimit-number-openfiles-linux-server" srcset="https://www.linuxtechi.com/wp-content/uploads/2019/06/ulimit-number-openfiles-linux-server-160x160.jpg 160w, https://www.linuxtechi.com/wp-content/uploads/2019/06/ulimit-number-openfiles-linux-server-150x150.jpg 150w, https://www.linuxtechi.com/wp-content/uploads/2019/06/ulimit-number-openfiles-linux-server-320x320.jpg 320w" sizes="(max-width: 160px) 100vw, 160px" /> </a>
+</div>
+<div class="tab-item-inner group">
+<p class="tab-item-title"><a href="https://www.linuxtechi.com/set-ulimit-file-descriptors-limit-linux-servers/" rel="bookmark" title="How to set ulimit and file descriptors limit on Linux Servers">How to set ulimit and file descriptors limit on Linux Servers</a></p>
+</div>
+</li>
+<li>
+<div class="tab-item-thumbnail">
+<a href="https://www.linuxtechi.com/install-lemp-stack-fedora-30-server/" title="How to Install LEMP (Linux, Nginx, MariaDB, PHP) on Fedora 30 Server">
+<img width="160" height="160" src="https://www.linuxtechi.com/wp-content/uploads/2019/06/LEMP-Stack-Fedora30-160x160.jpg" class="attachment-thumb-small size-thumb-small wp-post-image" alt="LEMP-Stack-Fedora30" srcset="https://www.linuxtechi.com/wp-content/uploads/2019/06/LEMP-Stack-Fedora30-160x160.jpg 160w, https://www.linuxtechi.com/wp-content/uploads/2019/06/LEMP-Stack-Fedora30-150x150.jpg 150w, https://www.linuxtechi.com/wp-content/uploads/2019/06/LEMP-Stack-Fedora30-320x320.jpg 320w" sizes="(max-width: 160px) 100vw, 160px" /> </a>
+</div>
+<div class="tab-item-inner group">
+<p class="tab-item-title"><a href="https://www.linuxtechi.com/install-lemp-stack-fedora-30-server/" rel="bookmark" title="How to Install LEMP (Linux, Nginx, MariaDB, PHP) on Fedora 30 Server">How to Install LEMP (Linux, Nginx, MariaDB, PHP) on Fedora 30 Server</a></p>
+</div>
+</li>
+<li>
+<div class="tab-item-thumbnail">
+<a href="https://www.linuxtechi.com/use-ansible-galaxy-roles-ansible-playbook/" title="How to Download and Use Ansible Galaxy Roles in Ansible Playbook">
+<img width="160" height="160" src="https://www.linuxtechi.com/wp-content/uploads/2019/05/Download-Use-Ansible-Galaxy-Roles-160x160.jpg" class="attachment-thumb-small size-thumb-small wp-post-image" alt="Download-Use-Ansible-Galaxy-Roles" srcset="https://www.linuxtechi.com/wp-content/uploads/2019/05/Download-Use-Ansible-Galaxy-Roles-160x160.jpg 160w, https://www.linuxtechi.com/wp-content/uploads/2019/05/Download-Use-Ansible-Galaxy-Roles-150x150.jpg 150w, https://www.linuxtechi.com/wp-content/uploads/2019/05/Download-Use-Ansible-Galaxy-Roles-320x320.jpg 320w" sizes="(max-width: 160px) 100vw, 160px" /> </a>
+</div>
+<div class="tab-item-inner group">
+<p class="tab-item-title"><a href="https://www.linuxtechi.com/use-ansible-galaxy-roles-ansible-playbook/" rel="bookmark" title="How to Download and Use Ansible Galaxy Roles in Ansible Playbook">How to Download and Use Ansible Galaxy Roles in Ansible Playbook</a></p>
+</div>
+</li>
+<li>
+<div class="tab-item-thumbnail">
+<a href="https://www.linuxtechi.com/monitor-manage-docker-containers-portainer-io-part-2/" title="Monitor and Manage Docker Containers with Portainer.io (GUI tool) &#8211; Part-2">
+<img width="160" height="160" src="https://www.linuxtechi.com/wp-content/uploads/2019/05/Containers-160x160.jpg" class="attachment-thumb-small size-thumb-small wp-post-image" alt="Containers-Status-Portainer" srcset="https://www.linuxtechi.com/wp-content/uploads/2019/05/Containers-160x160.jpg 160w, https://www.linuxtechi.com/wp-content/uploads/2019/05/Containers-150x150.jpg 150w, https://www.linuxtechi.com/wp-content/uploads/2019/05/Containers-320x320.jpg 320w" sizes="(max-width: 160px) 100vw, 160px" /> </a>
+</div>
+<div class="tab-item-inner group">
+<p class="tab-item-title"><a href="https://www.linuxtechi.com/monitor-manage-docker-containers-portainer-io-part-2/" rel="bookmark" title="Monitor and Manage Docker Containers with Portainer.io (GUI tool) &#8211; Part-2">Monitor and Manage Docker Containers with Portainer.io (GUI tool) &#8211; Part-2</a></p>
+</div>
+</li>
+</ul>
+<ul id="tab-comments-2" class="alx-tab group ">
+<li>
+<div class="tab-item-inner group">
+<div class="tab-item-name">Cesar says:</div>
+<div class="tab-item-comment"><a href="https://www.linuxtechi.com/install-apache-tomcat9-centos7-rhel7-ubuntu16-04/#comment-11731">I detected an error in the sptep 3... the last command...</a></div>
+</div>
+</li>
+<li>
+<div class="tab-item-inner group">
+<div class="tab-item-name">Pradeep Kumar says:</div>
+<div class="tab-item-comment"><a href="https://www.linuxtechi.com/set-ulimit-file-descriptors-limit-linux-servers/#comment-11703">cat /proc/sys/fs/file-max --&gt; shows the limit of max open file for...</a></div>
+</div>
+</li>
+<li>
+<div class="tab-item-inner group">
+<div class="tab-item-name">Raji says:</div>
+<div class="tab-item-comment"><a href="https://www.linuxtechi.com/set-ulimit-file-descriptors-limit-linux-servers/#comment-11667">cat /proc/sys/fs/file-max shows 146013, but ulimit -a...</a></div>
+</div>
+</li>
+<li>
+<div class="tab-item-inner group">
+<div class="tab-item-name">Anthony says:</div>
+<div class="tab-item-comment"><a href="https://www.linuxtechi.com/install-kubernetes-1-7-centos7-rhel7/#comment-11651">How about just leaving SELinux turned on? It isn&#039;t hard...</a></div>
+</div>
+</li>
+<li>
+<div class="tab-item-inner group">
+<div class="tab-item-name">MIKE says:</div>
+<div class="tab-item-comment"><a href="https://www.linuxtechi.com/fedora-30-workstation-installation-guide/#comment-11607">Hi Mister Ricky. Just change the root...</a></div>
+</div>
+</li>
+<li>
+<div class="tab-item-inner group">
+<div class="tab-item-name">Tri Nanda says:</div>
+<div class="tab-item-comment"><a href="https://www.linuxtechi.com/extend-lvm-partitions/#comment-11582">Very helpful, thanks Man :)</a></div>
+</div>
+</li>
+<li>
+<div class="tab-item-inner group">
+<div class="tab-item-name">Luis says:</div>
+<div class="tab-item-comment"><a href="https://www.linuxtechi.com/zorin-os-15-installation-guide-screenshots/#comment-11510">What about NVIDIA DRIVERS?, besides, what means each particion?</a></div>
+</div>
+ </li>
+<li>
+<div class="tab-item-inner group">
+<div class="tab-item-name">James says:</div>
+<div class="tab-item-comment"><a href="https://www.linuxtechi.com/install-configure-kvm-on-rhel-8/#comment-11502">Excellent article! Thank you!</a></div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div id="ws_fb_like_box-2" class="widget widget_ws_fb_like_box"><h3 class="widget-title">Find LinuxTechi on Facebook</h3><div class="fb-page ws-fb-like-box" data-href="https://www.facebook.com/linuxtechi" data-tabs="" data-width="300" data-height="500" data-small-header="false" data-adapt-container-width="false" data-hide-cover="false" data-show-facepile="true">
+<div class="fb-xfbml-parse-ignore">
+<blockquote cite="https://www.facebook.com/linuxtechi">
+<a href="https://www.facebook.com/linuxtechi">Facebook</a>
+</blockquote>
+</div>
+</div> <div id="fb-root"></div>
+<script type="a287e5e2e8ae3f667e2ceee5-text/javascript">(function(d, s, id) {
+					  var js, fjs = d.getElementsByTagName(s)[0];
+					  if (d.getElementById(id)) return;
+					  js = d.createElement(s); js.id = id;
+					  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6";
+					  fjs.parentNode.insertBefore(js, fjs);
+					}(document, 'script', 'facebook-jssdk'));</script></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<footer id="footer">
+<section class="container" id="footer-widgets">
+<div class="container-inner">
+<div class="pad group">
+<div class="footer-widget-1 grid one-third ">
+<div id="alxposts-5" class="widget widget_hu_posts">
+<h3 class="widget-title">Linux Desktop</h3>
+<ul class="alx-posts group ">
+<li>
+<div class="post-item-inner group">
+<p class="post-item-title"><a href="https://www.linuxtechi.com/zorin-os-15-installation-guide-screenshots/" rel="bookmark" title="Step by Step Zorin OS 15 Installation Guide with Screenshots">Step by Step Zorin OS 15 Installation Guide with Screenshots</a></p>
+</div>
+</li>
+<li>
+<div class="post-item-inner group">
+<p class="post-item-title"><a href="https://www.linuxtechi.com/rhel-8-installation-steps-screenshots/" rel="bookmark" title="Red Hat Enterprise Linux (RHEL) 8 Installation Steps with Screenshots">Red Hat Enterprise Linux (RHEL) 8 Installation Steps with Screenshots</a></p>
+</div>
+</li>
+<li>
+<div class="post-item-inner group">
+<p class="post-item-title"><a href="https://www.linuxtechi.com/fedora-30-workstation-installation-guide/" rel="bookmark" title="Fedora 30 Workstation Installation Guide with Screenshots">Fedora 30 Workstation Installation Guide with Screenshots</a></p>
+</div>
+</li>
+<li>
+<div class="post-item-inner group">
+<p class="post-item-title"><a href="https://www.linuxtechi.com/ubuntu-19-04-installation-guide-screenshots/" rel="bookmark" title="Ubuntu 19.04 (Disco Dingo) Desktop Installation Guide with Screenshots">Ubuntu 19.04 (Disco Dingo) Desktop Installation Guide with Screenshots</a></p>
+</div>
+</li>
+<li>
+<div class="post-item-inner group">
+<p class="post-item-title"><a href="https://www.linuxtechi.com/video-players-linux-desktop/" rel="bookmark" title="Top 8 Video Players for Your Linux Desktop">Top 8 Video Players for Your Linux Desktop</a></p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="footer-widget-2 grid one-third ">
+<div id="alxposts-3" class="widget widget_hu_posts">
+<h3 class="widget-title">Linux Commands</h3>
+<ul class="alx-posts group ">
+<li>
+<div class="post-item-inner group">
+<p class="post-item-title"><a href="https://www.linuxtechi.com/lsof-command-examples-linux-geeks/" rel="bookmark" title="18 Quick &#8216;lsof&#8217; command examples for Linux Geeks">18 Quick &#8216;lsof&#8217; command examples for Linux Geeks</a></p>
+</div>
+</li>
+<li>
+<div class="post-item-inner group">
+<p class="post-item-title"><a href="https://www.linuxtechi.com/rsync-command-examples-linux/" rel="bookmark" title="17 useful rsync (remote sync) Command Examples in Linux">17 useful rsync (remote sync) Command Examples in Linux</a></p>
+</div>
+</li>
+<li>
+<div class="post-item-inner group">
+<p class="post-item-title"><a href="https://www.linuxtechi.com/cp-command-examples-linux-beginners/" rel="bookmark" title="16 Useful &#8216;cp&#8217; Command Examples for Linux Beginners">16 Useful &#8216;cp&#8217; Command Examples for Linux Beginners</a></p>
+</div>
+</li>
+<li>
+<div class="post-item-inner group">
+<p class="post-item-title"><a href="https://www.linuxtechi.com/tips-hard-soft-links-linux-unix-systems/" rel="bookmark" title="Useful Tips about Hard and Soft (symlink) Links on Linux/Unix Systems">Useful Tips about Hard and Soft (symlink) Links on Linux/Unix Systems</a></p>
+</div>
+</li>
+<li>
+<div class="post-item-inner group">
+<p class="post-item-title"><a href="https://www.linuxtechi.com/dmidecode-command-examples-linux/" rel="bookmark" title="12 Useful &#8216;dmidecode&#8217; Command Examples for Linux Admin">12 Useful &#8216;dmidecode&#8217; Command Examples for Linux Admin</a></p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="footer-widget-3 grid one-third last">
+<div id="alxposts-4" class="widget widget_hu_posts">
+<h3 class="widget-title">Linux How To&#8217;s</h3>
+<ul class="alx-posts group ">
+<li>
+<div class="post-item-inner group">
+<p class="post-item-title"><a href="https://www.linuxtechi.com/record-replay-linux-terminal-sessions-activity/" rel="bookmark" title="Learn how to Record and Replay Linux Terminal Sessions Activity">Learn how to Record and Replay Linux Terminal Sessions Activity</a></p>
+</div>
+</li>
+<li>
+<div class="post-item-inner group">
+<p class="post-item-title"><a href="https://www.linuxtechi.com/install-configure-kvm-on-rhel-8/" rel="bookmark" title="How to Install and Configure KVM on RHEL 8">How to Install and Configure KVM on RHEL 8</a></p>
+</div>
+</li>
+<li>
+<div class="post-item-inner group">
+<p class="post-item-title"><a href="https://www.linuxtechi.com/vlan-tagged-nic-ethernet-card-centos-rhel-servers/" rel="bookmark" title="How to Use VLAN tagged NIC (Ethernet Card) on CentOS and RHEL Servers">How to Use VLAN tagged NIC (Ethernet Card) on CentOS and RHEL Servers</a></p>
+</div>
+</li>
+<li>
+<div class="post-item-inner group">
+<p class="post-item-title"><a href="https://www.linuxtechi.com/set-ulimit-file-descriptors-limit-linux-servers/" rel="bookmark" title="How to set ulimit and file descriptors limit on Linux Servers">How to set ulimit and file descriptors limit on Linux Servers</a></p>
+</div>
+</li>
+<li>
+<div class="post-item-inner group">
+<p class="post-item-title"><a href="https://www.linuxtechi.com/install-lemp-stack-fedora-30-server/" rel="bookmark" title="How to Install LEMP (Linux, Nginx, MariaDB, PHP) on Fedora 30 Server">How to Install LEMP (Linux, Nginx, MariaDB, PHP) on Fedora 30 Server</a></p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="container" id="footer-bottom">
+<div class="container-inner">
+<a id="back-to-top" href="#"><i class="fas fa-angle-up"></i></a>
+<div class="pad group">
+<div class="grid one-half">
+<div id="copyright">
+<p><p></p><ul style="color:#7f777f"><li>Linuxtechi: Linux Tutorials &amp; Guides © 2018. All Rights Reserved.</li> <li><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank"><img alt="Creative Commons License" style="border-width:0" src="https://www.linuxtechi.com/wp-content/uploads/2016/02/common-creative-license-linuxtechi.png" /></a> This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</li> <li>Content of this site cannot be republished either online or offline without our permissions.</li></ul><p></p></p>
+</div>
+</div>
+<div class="grid one-half last">
+<ul class="social-links"><li><a rel="nofollow" class="social-tooltip" title="Follow us on Facebook" aria-label="Follow us on Facebook" href="http://www.facebook.com/linuxtechi" target="_blank" style="color:rgba(255,255,255,0.7)"><i class="fab fa-facebook"></i></a></li><li><a rel="nofollow" class="social-tooltip" title="Follow us on Twitter" aria-label="Follow us on Twitter" href="http://www.twitter.com/linuxtechi" target="_blank" style="color:rgba(255,255,255,0.7)"><i class="fab fa-twitter"></i></a></li><li><a rel="nofollow" class="social-tooltip" title="Follow us on Rss" aria-label="Follow us on Rss" href="https://www.linuxtechi.com/feed" target="_blank" style="color:rgba(255,255,255,0.7)"><i class="fas fa-rss"></i></a></li></ul> </div>
+</div>
+</div>
+</section>
+</footer>
+</div>
+<link rel='stylesheet' id='wp-subscribe-css' href='https://www.linuxtechi.com/wp-content/plugins/wp-subscribe/assets/css/wp-subscribe-form.css?ver=5.2.2' type='text/css' media='all' />
+<script type="a287e5e2e8ae3f667e2ceee5-text/javascript" src='https://www.linuxtechi.com/wp-content/plugins/hueman-addons/addons/assets/front/js/jQuerySharrre.min.js?ver=5.2.2'></script>
+<script type="a287e5e2e8ae3f667e2ceee5-text/javascript" src='https://www.linuxtechi.com/wp-includes/js/underscore.min.js?ver=1.8.3'></script>
+<script type="a287e5e2e8ae3f667e2ceee5-text/javascript">
+/* <![CDATA[ */
+var HUParams = {"_disabled":[],"SmoothScroll":{"Enabled":true,"Options":{"touchpadSupport":false}},"centerAllImg":"1","timerOnScrollAllBrowsers":"1","extLinksStyle":"","extLinksTargetExt":"","extLinksSkipSelectors":{"classes":["btn","button"],"ids":[]},"imgSmartLoadEnabled":"","imgSmartLoadOpts":{"parentSelectors":[".container .content",".container .sidebar","#footer","#header-widgets"],"opts":{"excludeImg":[".tc-holder-img"],"fadeIn_options":100}},"goldenRatio":"1.618","gridGoldenRatioLimit":"350","sbStickyUserSettings":{"desktop":true,"mobile":false},"isWPMobile":"","menuStickyUserSettings":{"desktop":"stick_up","mobile":"stick_up"},"isDevMode":"","ajaxUrl":"https:\/\/www.linuxtechi.com\/?huajax=1","frontNonce":{"id":"HuFrontNonce","handle":"19087d1c36"},"userStarted":{"with":"with|3.3.7","on":{"date":"2017-05-20 12:23:49.000000","timezone_type":3,"timezone":"UTC"}},"isWelcomeNoteOn":"","welcomeContent":""};
+/* ]]> */
+</script>
+<script type="a287e5e2e8ae3f667e2ceee5-text/javascript" src='https://www.linuxtechi.com/wp-content/themes/hueman/assets/front/js/scripts.min.js?ver=3.4.0'></script>
+<script type="a287e5e2e8ae3f667e2ceee5-text/javascript" src='https://www.linuxtechi.com/wp-includes/js/comment-reply.min.js?ver=5.2.2'></script>
+<script type="a287e5e2e8ae3f667e2ceee5-text/javascript" src='https://www.linuxtechi.com/wp-includes/js/wp-embed.min.js?ver=5.2.2'></script>
+<script type="a287e5e2e8ae3f667e2ceee5-text/javascript">
+/* <![CDATA[ */
+var wp_subscribe = {"ajaxurl":"https:\/\/www.linuxtechi.com\/wp-admin\/admin-ajax.php"};
+/* ]]> */
+</script>
+<script type="a287e5e2e8ae3f667e2ceee5-text/javascript" src='https://www.linuxtechi.com/wp-content/plugins/wp-subscribe/assets/js/wp-subscribe-form.js?ver=5.2.2'></script>
+<script type="a287e5e2e8ae3f667e2ceee5-text/javascript">
+/* <![CDATA[ */
+var cptch_vars = {"nonce":"83b54cf821","ajaxurl":"https:\/\/www.linuxtechi.com\/wp-admin\/admin-ajax.php","enlarge":""};
+/* ]]> */
+</script>
+<script type="a287e5e2e8ae3f667e2ceee5-text/javascript" src='https://www.linuxtechi.com/wp-content/plugins/captcha/js/front_end_script.js?ver=5.2.2'></script>
+<!--[if lt IE 9]>
+<script src="https://www.linuxtechi.com/wp-content/themes/hueman/assets/front/js/ie/respond.js"></script>
+<![endif]-->
+<script src="https://ajax.cloudflare.com/cdn-cgi/scripts/a2bd7673/cloudflare-static/rocket-loader.min.js" data-cf-settings="a287e5e2e8ae3f667e2ceee5-|49" defer=""></script></body>
+</html>
+
+
+
